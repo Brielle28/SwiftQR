@@ -1,43 +1,39 @@
 import React from "react";
+import { GrLinkedin } from "react-icons/gr";
+import { FaGithub } from "react-icons/fa";
 
 const Footer = () => {
   return (
     <>
-      <div className="sticky bottom-0">
-        <footer className="fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-t border-gray-200 shadow-sm md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800 dark:border-gray-600">
-          <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-            © 2023{" "}
-            <a href="https://flowbite.com/" className="hover:underline">
-              Flowbite™
-            </a>
-            . All Rights Reserved.
-          </span>
-          <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
-            <li>
-              <a href="#" className="hover:underline me-4 md:me-6">
-                About
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:underline me-4 md:me-6">
-                Privacy Policy
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:underline me-4 md:me-6">
-                Licensing
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:underline">
-                Contact
-              </a>
-            </li>
-          </ul>
-        </footer>
-      </div>
+      <footer className="flex flex-row items-center justify-center fixed bottom-0 left-0 z-20 w-full p-4 bg-transparent shadow-sm md:p-10 gap-2 md:gap-5">
+        {/* Copyright Section */}
+        <div className="text-[11px] md:text-[16px] text-gray-500 sm:text-center dark:text-gray-400">
+          <p>Copyright © {new Date().getFullYear()} - All rights reserved</p>
+        </div>
+        {/* Social Icons Section */}
+        <div className="flex items-center justify-center gap-2 md:gap-5">
+          <a
+            href="https://www.linkedin.com/in/nnadozie-chukwuemerie-clara-b65273274/"
+            className="hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <GrLinkedin className="text-blue-500 text-[15px] md:text-[24px]" />
+          </a>
+          <a
+            href="https://github.com/Brielle28"
+            className="hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaGithub className="text-gray-800 text-[15px] md:text-[24px]" />
+          </a>
+        </div>
+      </footer>
     </>
   );
 };
 
 export default Footer;
+
+
