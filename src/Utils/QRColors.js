@@ -1,0 +1,30 @@
+export const QRColors = [
+    { id: 1, type: "URL", bgColor: "bg-gray-900", fgColor: "bg-white" },
+    { id: 2, type: "Email", bgColor: "bg-red-600", fgColor: "bg-white" },
+    { id: 3, type: "VCard", bgColor: "bg-gray-500", fgColor: "bg-white" },
+    { id: 4, type: "Message", bgColor: "bg-green-500", fgColor: "bg-white" },
+    { id: 5, type: "Call", bgColor: "bg-green-600", fgColor: "bg-white" },
+    { id: 6, type: "WiFi", bgColor: "bg-blue-500", fgColor: "bg-white" },
+    { id: 7, type: "Crypto", bgColor: "bg-orange-500", fgColor: "bg-black" },
+    { id: 8, type: "Text", bgColor: "bg-blue-800", fgColor: "bg-white" },
+
+    // Social Media Colors
+    { id: 9, type: "Facebook", bgColor: "bg-[#1877F2]", fgColor: "bg-white" },
+    { id: 10, type: "Twitter", bgColor: "bg-black", fgColor: "bg-white" },
+    { id: 11, type: "LinkedIn", bgColor: "bg-[#0A66C2]", fgColor: "bg-white" },
+    { id: 12, type: "Instagram", bgColor: "bg-gradient-to-r from-[#feda75] via-[#fa7e1e] to-[#d62976]", fgColor: "bg-white" },
+    { id: 13, type: "YouTube", bgColor: "bg-[#FF0000]", fgColor: "bg-white" },
+    { id: 14, type: "WhatsApp", bgColor: "bg-[#25D366]", fgColor: "bg-white" },
+    { id: 15, type: "Snapchat", bgColor: "bg-[#FFFC00]", fgColor: "bg-black" },
+    { id: 16, type: "Discord", bgColor: "bg-[#5865F2]", fgColor: "bg-white" },
+    { id: 17, type: "Reddit", bgColor: "bg-[#FF4500]", fgColor: "bg-white" },
+    { id: 18, type: "GitHub", bgColor: "bg-[#171515]", fgColor: "bg-white" },
+    { id: 19, type: "Twitch", bgColor: "bg-[#9146FF]", fgColor: "bg-white" },
+    { id: 20, type: "Google", bgColor: "bg-[#4285F4]", fgColor: "bg-white" },
+    { id: 21, type: "Microsoft", bgColor: "bg-[#737373]", fgColor: "bg-white" },
+    { id: 22, type: "PayPal", bgColor: "bg-[#00457C]", fgColor: "bg-white" },
+    { id: 23, type: "Amazon", bgColor: "bg-[#FF9900]", fgColor: "bg-white" },
+    { id: 24, type: "Netflix", bgColor: "bg-[#E50914]", fgColor: "bg-white" },
+    { id: 25, type: "Spotify", bgColor: "bg-[#1DB954]", fgColor: "bg-black" },
+    { id: 26, type: "Telegram", bgColor: "bg-[#0088CC]", fgColor: "bg-white" }
+];

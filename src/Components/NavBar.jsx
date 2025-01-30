@@ -1,13 +1,10 @@
 import React from "react";
 import { BsQrCode } from "react-icons/bs";
 import { Link } from "react-router-dom";
-{
-  /* <BsQrCode /> */
-}
 const NavBar = () => {
   return (
     <>
-      <nav className="fixed top-0 w-full h-[50px] px-3 md:h-[90px] flex items-center justify-between md:px-[50px]  ">
+      <nav className="fixed top-0 w-full h-[50px] px-3 md:h-[90px] flex items-center justify-between md:px-[50px]  bg-[#F4FAFF]">
         <div className="flex gap-1 items-center justify-center">
           <BsQrCode className="text-[#2DB951] md:text-[35px]" />
           <h1 className="md:text-[30px] font-bold text-black">SwiftQR</h1>
