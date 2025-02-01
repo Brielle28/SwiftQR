@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import QR from "./Page/QR";
 import Layout from "./Layout/Layout";
 import History from "./Page/History";
+import QRDetail from "./Page/QRDetail";
 
 const routing = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const routing = createBrowserRouter([
       {
         path: "/history",
         element: <History/>
+      },
+      {
+        path:"/history/:id",
+         element:<QRDetail />
       }
 
     ]
