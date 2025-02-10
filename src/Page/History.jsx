@@ -21,7 +21,7 @@ const History = () => {
       </div>
 
       {/* Scrollable QR Code List */}
-      <div className="mt-[120px] md:mt-[160px] w-full md:w-[80%] bg-green-50 p-2 md:p-4 rounded-lg shadow-md h-[430px] overflow-y-auto">
+      <div className="mt-[120px] md:mt-[210px] w-full md:w-[80%] bg-green-50 p-2 md:p-4 rounded-lg shadow-md h-[430px] overflow-y-auto">
         {qrCodes.map((qr) => (
           <Link to={`/history/${qr.id}`} key={qr.id} className="block w-full">
             <div

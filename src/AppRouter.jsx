@@ -4,32 +4,36 @@ import QR from "./Page/QR";
 import Layout from "./Layout/Layout";
 import History from "./Page/History";
 import QRDetail from "./Page/QRDetail";
+import { QrContext } from "../src/Context/QrContext";
 
 const routing = createBrowserRouter([
   {
     path: "/",
-    element: <Layout/>,
+    element: <Layout />,
     children: [
       {
         path: "/",
-        element: <QR/>
+        element: <QR />,
       },
       {
         path: "/history",
-        element: <History/>
+        element: <History />,
       },
       {
-        path:"/history/:id",
-         element:<QRDetail />
-      }
-
-    ]
+        path: "/history/:id",
+        element: <QRDetail />,
+      },
+    ],
   },
 ]);
 const AppRouter = () => {
-  return <>
-  <RouterProvider router={routing}/>
-  </>;
+  return (
+    <>
+      <QrContext>
+        <RouterProvider router={routing} />
+      </QrContext>
+    </>
+  );
 };
 
 export default AppRouter;
