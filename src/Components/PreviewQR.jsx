@@ -1,7 +1,6 @@
-// // import React from "react";
+// import React from "react";
 // import QRCode from "react-qr-code";
 // import { useQRCode } from "../context/QrContext";
-
 
 // const PreviewQR = () => {
 //   const { 
@@ -11,10 +10,18 @@
 //     setSelectedFormat 
 //   } = useQRCode();
 
-//   console.log(selectedColor.hexColor, "selectedColor")
-//   console.log(inputValue, "this is inputValue")
+//   // Function to create scannable QR value based on destination type
+//   const getQRValue = () => {
+//     if (!inputValue) return 'https://example.com';
+    
+//     // Make sure we have a valid string to encode
+//     const value = inputValue.trim();
+//     if (!value) return 'https://example.com';
+
+//     return value;
+//   };
+
 //   const handleDownload = () => {
-//     // Implement download logic here
 //     const svg = document.querySelector('#qr-code svg');
 //     if (!svg) return;
 
@@ -40,16 +47,18 @@
 //   return (
 //     <div className="md:w-[25%] w-[100%] flex-col bg-white rounded-[10px] shadow-2xl h-[400px] flex items-center py-5 justify-start">
 //       <h1 className="text-[23px] font-bold">Preview QR</h1>
-//       <div id="qr-code">
+//       <div id="qr-code" className="p-4 bg-white rounded-lg">
 //         <QRCode
-//           value={inputValue || 'https://example.com'}
-//           bgColor={selectedColor.hexColor}
-//           // bgColor= "yellow"
-//           fgColor="white"
-//           className="w-full h-[190px] mt-2"
+//           value={getQRValue()}
+//           bgColor="white"  // Keep background white for better contrast
+//           fgColor={selectedColor?.hexColor || "#000000"}  // Use selected color for QR code
+//           size={200}  // Fixed size for better quality
+//           level="H"  // Highest error correction level
+//           className="w-full"
+//           style={{ height: "auto", maxWidth: "100%", width: "100%" }}
 //         />
 //       </div>
-//       <div className="w-full mt-4 px-3">
+//       <div className="w-full px-3 ">
 //         <div className="w-full items-center flex justify-between">
 //           {['PNG', 'SVG', 'JPEG'].map((format) => (
 //             <button
@@ -64,7 +73,7 @@
 //         </div>
 //         <button 
 //           onClick={handleDownload}
-//           className="w-full py-3 bg-green-500 mt-4 rounded-[8px] text-white font-bold"
+//           className="w-full py-3 bg-green-500 mt-2 rounded-[8px] text-white font-bold"
 //         >
 //           Download
 //         </button>
@@ -72,18 +81,20 @@
 //     </div>
 //   );
 // };
-// export default PreviewQR;
-
 import React from "react";
 import QRCode from "react-qr-code";
 import { useQRCode } from "../context/QrContext";
+import { v4 as uuidv4 } from 'uuid';
 
 const PreviewQR = () => {
   const { 
     inputValue, 
     selectedColor, 
     selectedFormat, 
-    setSelectedFormat 
+    setSelectedFormat,
+    selectedDestination,
+    qrHistory,
+    setQrHistory
   } = useQRCode();
 
   // Function to create scannable QR value based on destination type
@@ -95,6 +106,21 @@ const PreviewQR = () => {
     if (!value) return 'https://example.com';
 
     return value;
+  };
+
+  const saveToHistory = (imageUrl) => {
+    const historyItem = {
+      id: uuidv4(),
+      qrImage: imageUrl,
+      destinationType: selectedDestination?.type || 'Unknown',
+      inputValue: inputValue || 'No input',
+      createdAt: new Date().toISOString(),
+      color: selectedColor.hexColor
+    };
+
+    const updatedHistory = [historyItem, ...qrHistory];
+    setQrHistory(updatedHistory);
+    localStorage.setItem('qrHistory', JSON.stringify(updatedHistory));
   };
 
   const handleDownload = () => {
@@ -111,9 +137,16 @@ const PreviewQR = () => {
       canvas.height = img.height;
       ctx.drawImage(img, 0, 0);
       
+      // Get image URL before downloading
+      const imageUrl = canvas.toDataURL(`image/${selectedFormat.toLowerCase()}`);
+      
+      // Save to history
+      saveToHistory(imageUrl);
+      
+      // Download the image
       const downloadLink = document.createElement('a');
       downloadLink.download = `qr-code.${selectedFormat.toLowerCase()}`;
-      downloadLink.href = canvas.toDataURL(`image/${selectedFormat.toLowerCase()}`);
+      downloadLink.href = imageUrl;
       downloadLink.click();
     };
     
@@ -130,11 +163,11 @@ const PreviewQR = () => {
           fgColor={selectedColor?.hexColor || "#000000"}  // Use selected color for QR code
           size={200}  // Fixed size for better quality
           level="H"  // Highest error correction level
-          className="w-full "
+          className="w-full"
           style={{ height: "auto", maxWidth: "100%", width: "100%" }}
         />
       </div>
-      <div className="w-full px-3 ">
+      <div className="w-full px-3">
         <div className="w-full items-center flex justify-between">
           {['PNG', 'SVG', 'JPEG'].map((format) => (
             <button

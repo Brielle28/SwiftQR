@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 const NavBar = () => {
   return (
     <>
-      <nav className="fixed top-0 w-full h-[50px] px-3 md:h-[90px] flex items-center justify-between md:px-[50px]  bg-[#F4FAFF]">
+      <nav className="fixed top-0 w-full h-[50px] px-3 md:h-[73px] flex items-center justify-between md:px-[50px]  bg-[#F4FAFF]">
+        <Link to="/">
         <div className="flex gap-1 items-center justify-center">
           <BsQrCode className="text-[#2DB951] md:text-[35px]" />
           <h1 className="md:text-[30px] font-bold text-black">SwiftQR</h1>
         </div>
+        </Link>
         <div className=" flex gap-3 md:gap-10 items-center justify-center mt-[] md:mt-0">
           <Link to="/">
             <button className=" bg-transparent text-[#2DB951] font-semibold md:text-[18px] text-[11px]">

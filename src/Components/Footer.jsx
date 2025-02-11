@@ -5,7 +5,7 @@ import { FaGithub } from "react-icons/fa";
 const Footer = () => {
   return (
     <>
-      <footer className="flex flex-row items-center justify-center fixed bottom-0 left-0 z-20 w-full p-4 bg-[#F4FAFF]  shadow-sm md:bg-transparent gap-2 md:gap-5">
+      <footer className="flex flex-row items-center justify-center fixed bottom-0 left-0 z-20 w-full p-4 bg-[#F4FAFF]  shadow-sm  gap-2 md:gap-5">
         {/* Copyright Section */}
         <div className="text-[11px] md:text-[16px] text-gray-500 sm:text-center dark:text-gray-400">
           <p>Copyright © {new Date().getFullYear()} - All rights reserved</p>

@@ -79,7 +79,7 @@ const Configuration = () => {
         type="text"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
-        className="w-full py-3 rounded-[10px] border-[3px] border-green-500 outline-0 outline-none mt-1 pl-2"
+        className="w-full py-3 rounded-[10px] border-[2px] border-green-500 outline-0 outline-none mt-1 pl-2"
         placeholder={getPlaceholder()}
         disabled={!selectedDestination}
       />
