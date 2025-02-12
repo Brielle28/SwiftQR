@@ -80,11 +80,6 @@ export const Destinations = [
         type: "WhatsApp", 
         icon: FaWhatsapp
     },
-    // { 
-    //     id: 15, 
-    //     type: "Snapchat", 
-    //     icon: FaSnapchat
-    // },
     { 
         id: 16, 
         type: "Discord", 
@@ -99,27 +94,7 @@ export const Destinations = [
         id: 18, 
         type: "GitHub", 
         icon: FaGithub
-    },
-    // { 
-    //     id: 19, 
-    //     type: "Twitch", 
-    //     icon: FaTwitch
-    // },
-    // { 
-    //     id: 20, 
-    //     type: "Google", 
-    //     icon: FaGoogle
-    // },
-    // { 
-    //     id: 21, 
-    //     type: "Microsoft", 
-    //     icon: FaMicrosoft
-    // },
-    // { 
-    //     id: 22, 
-    //     type: "PayPal", 
-    //     icon: FaPaypal
-    // },
+    },  
     { 
         id: 23, 
         type: "Amazon", 
