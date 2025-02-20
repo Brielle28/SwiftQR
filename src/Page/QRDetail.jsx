@@ -1,29 +1,31 @@
 import { useParams, Link } from "react-router-dom";
 import { useQRCode } from "../context/QrContext";
 import { useState } from "react";
+import { Trash2 } from "lucide-react"; // Ensure this import is correct
 
 const QRDetail = () => {
-  const { qrHistory } = useQRCode();
+  const { qrHistory, deleteQR } = useQRCode();
   const { id } = useParams();
+  const [copied, setCopied] = useState(false);
 
   // Find the matching QR code using string comparison
   const qr = qrHistory.find((item) => item.id === id);
 
   const handleDownload = () => {
-    // Create temporary link
+    if (!qr) return;
     const link = document.createElement("a");
-    link.href = qr.qrImage; // Use the stored image from history
+    link.href = qr.qrImage;
     link.download = `qr-code-${qr.destinationType.toLowerCase()}.png`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
-  const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
+    if (!qr) return;
     navigator.clipboard.writeText(qr.inputValue).then(() => {
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000); // Reset after 2s
+      setTimeout(() => setCopied(false), 2000);
     });
   };
 
@@ -61,19 +63,15 @@ const QRDetail = () => {
           </div>
 
           {/* Details Section */}
-          <div className="md:ml-6 mt-2 md:mt-0 flex flex-col items-center justify-center md:items-start md:justify-items-start text-center md:text-left w-full">
-            <h2 className="text-lg md:text-2xl font-semibold text-red-500 md:mb-1">
+          <div className="md:ml-6 mt-2 md:mt-0 flex flex-col items-start justify-items-start text-center md:text-left w-full">
+            <h2 className="text-lg md:text-2xl font-semibold text-red-500 md:mb-1 text-[15px] md:text-[17px]">
               Type: {qr.destinationType}
             </h2>
 
-            {/* <p className="text-gray-700 font-medium">
-              Value:{" "}
-              <span className="text-blue-500 break-all">{qr.inputValue}</span>
-            </p> */}
             <div className="relative cursor-pointer group" onClick={handleCopy}>
-              <p className="text-gray-700 font-medium">
+              <p className="text-gray-700 font-medium text-[13px] md:text-[15px]">
                 Value:{" "}
-                <span className="text-blue-500 break-all group-hover:underline">
+                <span className="text-blue-500 break-all group-hover:underline text-[13px] md:text-[15px]">
                   {qr.inputValue}
                 </span>
               </p>
@@ -83,9 +81,9 @@ const QRDetail = () => {
                 </span>
               )}
             </div>
-            <p className="text-gray-700 text-sm md:text-lg mt-1">
+            <p className="text-gray-700 text-sm md:text-lg mt-1 text-[13px] md:text-[15px]">
               Created:{" "}
-              <span className="font-medium">
+              <span className="font-medium text-[13px] md:text-[15px]">
                 {new Date(qr.createdAt).toLocaleString()}
               </span>
             </p>
@@ -101,13 +99,27 @@ const QRDetail = () => {
             </div>
 
             {/* Navigation & Action Buttons */}
-            <div className="mt-6 flex flex-col items-center md:items-start gap-2">
-              <Link
-                to="/history"
-                className="text-green-600 hover:text-green-800 font-semibold text-sm md:text-lg"
-              >
-                ⬅ Go Back
-              </Link>
+            <div className="mt-1 flex flex-col items-center md:items-start gap-2 md:w-[70%] w-full">
+              <div className="w-full flex items-center justify-between">
+                <Link
+                  to="/history"
+                  className="text-green-600 p-1 md:p-2 hover:bg-green-300 rounded-[8px] font-semibold text-sm md:text-lg"
+                >
+                  ⬅ Go Back
+                </Link>
+
+                {/* Delete Button */}
+                <button
+                  onClick={() => deleteQR(qr.id)}
+                  className="p-2 hover:bg-red-300 rounded-[8px] flex items-center gap-2"
+                  title="Delete"
+                >
+                  <Trash2 className="w-5 h-5 text-red-500" />
+                  <span className="text-red-500 font-semibold">Delete</span>
+                </button>
+              </div>
+
+              {/* Download Button */}
               <button
                 onClick={handleDownload}
                 className="bg-green-500 px-5 py-2 md:py-3 rounded-md text-white font-semibold hover:bg-green-700 text-sm md:text-base transition duration-300 ease-in-out w-full md:w-auto"

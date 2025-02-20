@@ -1,4 +1,3 @@
-// // src/Context/QrContext.jsx
 // import React, { createContext, useContext, useState } from 'react';
 
 // const QRCodeContext = createContext();
@@ -9,9 +8,12 @@
 //   const [selectedColor, setSelectedColor] = useState({
 //     bgColor: "bg-gray-900",
 //     hexColor: "#111827"
-// });
+//   });
 //   const [selectedFormat, setSelectedFormat] = useState('PNG');
-//   const [qrHistory, setQrHistory] = useState([]);
+//   const [qrHistory, setQrHistory] = useState(() => {
+//     const savedHistory = localStorage.getItem('qrHistory');
+//     return savedHistory ? JSON.parse(savedHistory) : [];
+//   });
 
 //   const value = {
 //     selectedDestination,
@@ -33,7 +35,6 @@
 //   );
 // };
 
-// // Custom hook to use the QR Code context
 // export const useQRCode = () => {
 //   const context = useContext(QRCodeContext);
 //   if (!context) {
@@ -59,6 +60,29 @@ export const QrContext = ({ children }) => {
     return savedHistory ? JSON.parse(savedHistory) : [];
   });
 
+  // Function to download QR code
+  const downloadQR = (qr) => {
+    const downloadLink = document.createElement("a");
+    downloadLink.href = qr.qrImage;
+    downloadLink.download = `qr-code-${qr.destinationType}-${new Date().getTime()}.${selectedFormat.toLowerCase()}`;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  };
+
+  // Function to delete QR code from history
+  const deleteQR = (id) => {
+    const updatedHistory = qrHistory.filter(qr => qr.id !== id);
+    setQrHistory(updatedHistory);
+    localStorage.setItem('qrHistory', JSON.stringify(updatedHistory));
+  };
+
+  // Function to clear all history
+  const clearHistory = () => {
+    setQrHistory([]);
+    localStorage.removeItem('qrHistory');
+  };
+
   const value = {
     selectedDestination,
     setSelectedDestination,
@@ -69,7 +93,10 @@ export const QrContext = ({ children }) => {
     selectedFormat,
     setSelectedFormat,
     qrHistory,
-    setQrHistory
+    setQrHistory,
+    downloadQR,
+    deleteQR,
+    clearHistory
   };
 
   return (

@@ -1,117 +1,171 @@
 import React, { useState, useMemo } from "react";
-import { FaEllipsisV } from "react-icons/fa";
-// import CustomDropdown from "../Components/CustomDropdown";
-import { Link } from "react-router-dom";
 import { useQRCode } from "../context/QrContext";
+import {
+  Calendar,
+  Search,
+  Filter,
+  MoreVertical,
+  Download,
+  Trash2,
+} from "lucide-react";
+import { Link } from "react-router-dom";
 
 const History = () => {
-  const { qrHistory } = useQRCode();
+  const { qrHistory, downloadQR, deleteQR } = useQRCode();
   const [searchQuery, setSearchQuery] = useState("");
-  const [filterType, setFilterType] = useState("all"); // all, url, whatsapp, email, etc.
+  const [filterType, setFilterType] = useState("all");
+  const [selectedQR, setSelectedQR] = useState(null);
 
-  // Filtered and searched QR codes
-  const filteredQRCodes = useMemo(() => {
-    return qrHistory
-      .filter(qr => {
-        // Apply type filter
-        if (filterType !== "all" && qr.destinationType.toLowerCase() !== filterType.toLowerCase()) {
-          return false;
+  // Format input value based on QR type
+  const formatInputValue = (qr) => {
+    if (!qr.inputValue) return "";
+
+    switch (qr.destinationType.toLowerCase()) {
+      case "wifi":
+        return `Network: ${qr.inputValue.ssid || ""}`;
+
+      case "email":
+        if (typeof qr.inputValue === "object") {
+          return `To: ${qr.inputValue.email || ""} Subject: ${
+            qr.inputValue.subject || ""
+          }`;
         }
-        
-        // Apply search
-        const searchLower = searchQuery.toLowerCase();
-        return (
-          qr.inputValue.toLowerCase().includes(searchLower) ||
-          qr.destinationType.toLowerCase().includes(searchLower) ||
-          new Date(qr.createdAt).toLocaleDateString().toLowerCase().includes(searchLower)
-        );
-      })
-      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // Sort by date, newest first
-  }, [qrHistory, searchQuery, filterType]);
+        return qr.inputValue;
 
-  // Filter options based on available QR types in history
+      case "message":
+        if (typeof qr.inputValue === "object") {
+          return `To: ${qr.inputValue.number || ""} Message: ${
+            qr.inputValue.message || ""
+          }`;
+        }
+        return qr.inputValue;
+
+      default:
+        return typeof qr.inputValue === "object"
+          ? JSON.stringify(qr.inputValue)
+          : String(qr.inputValue);
+    }
+  };
+
   const filterOptions = useMemo(() => {
-    const types = new Set(qrHistory.map(qr => qr.destinationType.toLowerCase()));
+    const types = new Set(
+      qrHistory.map((qr) => qr.destinationType.toLowerCase())
+    );
     return ["all", ...Array.from(types)];
   }, [qrHistory]);
 
+  const filteredQRCodes = useMemo(() => {
+    return qrHistory
+      .filter((qr) => {
+        const formattedValue = formatInputValue(qr).toLowerCase();
+        const destinationType = (qr.destinationType || "").toLowerCase();
+        const createdAt = qr.createdAt
+          ? new Date(qr.createdAt).toLocaleDateString().toLowerCase()
+          : "";
+
+        if (
+          filterType !== "all" &&
+          destinationType !== filterType.toLowerCase()
+        ) {
+          return false;
+        }
+
+        const searchLower = searchQuery.toLowerCase();
+        return (
+          formattedValue.includes(searchLower) ||
+          destinationType.includes(searchLower) ||
+          createdAt.includes(searchLower)
+        );
+      })
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  }, [qrHistory, searchQuery, filterType]);
+
+  const handleQRSelect = (qr) => {
+    setSelectedQR(selectedQR?.id === qr.id ? null : qr);
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center bg-transparent min-h-screen">
-      {/* Fixed Search and Filters */}
-      <div className="w-[95%] md:w-[80%] fixed top-[70px] md:top-[102px] left-1/2 transform -translate-x-1/2 bg-white shadow-md p-4 md:p-8 rounded-lg z-10">
-        <div className="flex flex-row items-center gap-4 justify-between w-full">
-          <div className="w-[80%]">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by type, value, or date..."
-              className="border rounded md:pl-3 md:text-[15px] w-[100%] h-[30px] md:h-[40px] md:py-2 text-black text-[13px] md:w-[90%]"
-            />
+    <div className="min-h-screen bg-gray-50 mt-[50px] md:mt-[50">
+      {/* Header Section */}
+      <div className="sticky top-[50px]  bg-white shadow-sm p-4 md:top-[80px]">
+        <div className="max-w-7xl mx-auto">
+          <h1 className="text-2xl font-bold mb-4">QR Code History</h1>
+
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="relative flex-grow">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search QR codes..."
+                className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+
+            <div className="relative w-full sm:w-48 ">
+              <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <select
+                value={filterType}
+                onChange={(e) => setFilterType(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 border rounded-lg appearance-none bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              >
+                {filterOptions.map((type) => (
+                  <option key={type} value={type}>
+                    {type.charAt(0).toUpperCase() + type.slice(1)}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-          <select
-            value={filterType}
-            onChange={(e) => setFilterType(e.target.value)}
-            className="border rounded text-black text-[13px] h-[30px] w-[30%] md:h-[40px]"
-          >
-            {filterOptions.map(type => (
-              <option key={type} value={type}>
-                {type.charAt(0).toUpperCase() + type.slice(1)}
-              </option>
-            ))}
-          </select>
         </div>
       </div>
 
-      {/* Scrollable QR Code List */}
-      <div className="mt-[135px] md:mt-[250px] w-full md:w-[80%] bg-green-50 p-2 md:p-4 rounded-lg shadow-md h-[430px] overflow-y-auto">
+      {/* QR Code Grid */}
+      <div className="max-w-7xl mx-auto p-4 md:mt-[30px]">
         {filteredQRCodes.length === 0 ? (
-          <div className="text-center py-8 text-gray-500">
-            No QR codes found matching your criteria
+          <div className="text-center py-12">
+            <p className="text-gray-500 text-lg">No QR codes found</p>
           </div>
         ) : (
-          filteredQRCodes.map((qr) => (
-            <Link to={`/history/${qr.id}`} key={qr.id} className="block w-full">
-              <div className="flex flex-row justify-between bg-white items-center p-1 md:p-4 hover:bg-green-100 transition mb-3 shadow-md rounded-lg w-full">
-                {/* Left Section - QR Code Image & Details */}
-                <div className="flex items-center justify-start text-start gap-1 md:gap-4 w-full md:w-auto">
-                  <img
-                    src={qr.qrImage}
-                    alt="QR Code"
-                    className="w-16 h-20 md:w-28 md:h-24 object-contain"
-                  />
-                  <div className="text-start md:text-left">
-                    <p className="text-red-500 font-bold text-[11px] md:text-[17px]">
-                      {qr.destinationType}
-                    </p>
-                    <p className="text-gray-900 font-medium text-[11px] md:text-[17px]">
-                      {qr.inputValue}
-                    </p>
-                    <div className="flex md:hidden w-full flex-col items-start justify-start">
-                      <p className="text-gray-500 text-[11px] md:text-sm">
-                        Created: {new Date(qr.createdAt).toLocaleDateString()}
-                      </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredQRCodes.map((qr) => (
+              <Link to={`/history/${qr.id}`} key={qr.id} className="block">
+                <div
+                  className={`bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden ${
+                    selectedQR?.id === qr.id ? "ring-2 ring-blue-500" : ""
+                  }`}
+                >
+                  <div className="p-4">
+                    <div className="flex justify-between items-start">
+                      <div className="flex gap-4">
+                        <img
+                          src={qr.qrImage}
+                          alt="QR Code"
+                          className="w-24 h-24 object-contain bg-gray-50 rounded"
+                        />
+                        <div>
+                          <span className="inline-block px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
+                            {qr.destinationType}
+                          </span>
+                          <p className="mt-2 text-[13px] md:text-[15px] w-[80%] md:w-full text-gray-600 line-clamp-2">
+                            {formatInputValue(qr)}
+                          </p>
+                          <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
+                            <Calendar className="w-4 h-4" />
+                            <span>
+                              {new Date(qr.createdAt).toLocaleDateString()}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <MoreVertical className="w-5 h-5 text-gray-500" />
                     </div>
                   </div>
                 </div>
-
-                {/* Middle Section - Creation Date */}
-                <div className="hidden md:flex w-full md:w-auto flex-col items-center md:items-start justify-start">
-                  <p className="text-gray-500 text-xs md:text-[17px]">
-                    Created: {new Date(qr.createdAt).toLocaleDateString()}
-                  </p>
-                </div>
-
-                {/* Right Section - Detail Button & More Options */}
-                <div className="flex items-center gap-3 md:gap-8 mt-2 md:mt-0">
-                  <button className="border-2 px-4 md:px-8 py-1 md:py-2 rounded-[4px] md:rounded-[8px] text-green-600 border-green-600 text-xs md:text-sm">
-                    Detail
-                  </button>
-                  <FaEllipsisV className="hidden md:block text-gray-600 cursor-pointer" />
-                </div>
-              </div>
-            </Link>
-          ))
+              </Link>
+            ))}
+          </div>
         )}
       </div>
     </div>

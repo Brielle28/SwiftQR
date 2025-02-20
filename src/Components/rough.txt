@@ -1,0 +1,294 @@
+import React from 'react';
+import { IoIosLink } from "react-icons/io";
+import { MdOutlineMailOutline, MdOutlineWifiCalling3, MdOutlineWifi } from "react-icons/md";
+import { FaRegUser } from "react-icons/fa";
+import { FiMessageCircle } from "react-icons/fi";
+import { CiBitcoin } from "react-icons/ci";
+import { TfiText } from "react-icons/tfi";
+import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram, FaYoutube, FaWhatsapp, FaSnapchat, FaDiscord, FaReddit, FaGithub, FaTwitch, FaGoogle, FaMicrosoft, FaPaypal, FaAmazon, FaSpotify, FaTelegram } from "react-icons/fa";
+
+
+
+
+//initial swtich statement for input test
+ const getPlaceholder = () => {
+    switch (selectedDestination?.type.toLowerCase()) {
+      case 'whatsapp':
+        return 'Enter phone number...';
+      case 'email':
+        return 'Enter email address...';
+      case 'url':
+        return 'Enter website URL...';
+      case 'vcard':
+        return 'Enter contact details...';
+      case 'message':
+        return 'Enter message content...';
+      case 'call':
+        return 'Enter phone number to call...';
+      case 'wifi':
+        return 'Enter WiFi network details...';
+      case 'crypto':
+        return 'Enter cryptocurrency wallet address...';
+      case 'text':
+        return 'Enter your text...';
+      case 'facebook':
+        return 'Enter Facebook profile or page URL...';
+      case 'twitter':
+        return 'Enter Twitter handle or profile URL...';
+      case 'linkedin':
+        return 'Enter LinkedIn profile URL...';
+      case 'instagram':
+        return 'Enter Instagram profile URL...';
+      case 'youtube':
+        return 'Enter YouTube channel or video URL...';
+      case 'snapchat':
+        return 'Enter Snapchat username...';
+      case 'discord':
+        return 'Enter Discord server invite link...';
+      case 'reddit':
+        return 'Enter Reddit profile or subreddit link...';
+      case 'github':
+        return 'Enter GitHub profile or repository URL...';
+      case 'twitch':
+        return 'Enter Twitch channel URL...';
+      case 'google':
+        return 'Enter Google profile or service URL...';
+      case 'microsoft':
+        return 'Enter Microsoft service or profile URL...';
+      case 'paypal':
+        return 'Enter PayPal payment link...';
+      case 'amazon':
+        return 'Enter Amazon store or product URL...';
+      case 'netflix':
+        return 'Enter Netflix profile or content URL...';
+      case 'spotify':
+        return 'Enter Spotify track, playlist, or profile URL...';
+      case 'telegram':
+        return 'Enter Telegram username or group link...';
+      default:
+        return 'Select a destination type...';
+    }    
+  };
+
+
+
+  import React from "react";
+import QRCode from "react-qr-code";
+import { useQRCode } from "../context/QrContext";
+import { v4 as uuidv4 } from "uuid";
+
+const PreviewQR = () => {
+  const {
+    inputValue,
+    selectedColor,
+    selectedFormat,
+    setSelectedFormat,
+    selectedDestination,
+    qrHistory,
+    setQrHistory,
+  } = useQRCode();
+
+  
+  const getQRValue = () => {
+    if (!selectedDestination || !inputValue) return "https://example.com";
+
+    switch (selectedDestination.type.toLowerCase()) {
+      case "url":
+        // Ensure URL has proper protocol
+        return inputValue.startsWith("http")
+          ? inputValue
+          : `https://${inputValue}`;
+
+      case "email":
+        // Format: mailto:email?subject=SubjectText&body=MessageBody
+        const emailData =
+          typeof inputValue === "object"
+            ? inputValue
+            : { email: "", subject: "", message: "" };
+        // Remove any existing mailto: prefix
+        const cleanEmail = emailData.email.replace("mailto:", "");
+        // Properly encode subject and body
+        const subject = encodeURIComponent(emailData.subject || "");
+        const body = encodeURIComponent(emailData.message || "");
+        // Construct the mailto URI
+        return `mailto:${cleanEmail}?subject=${subject}&body=${body}`;
+
+      case "wifi":
+        // Format: WIFI:T:<type>;S:<ssid>;P:<password>;H:<hidden>;;
+        const wifiData =
+          typeof inputValue === "object"
+            ? inputValue
+            : { ssid: "", password: "", security: "" };
+        return `WIFI:T:${wifiData.security || "nopass"};S:${wifiData.ssid};P:${
+          wifiData.password
+        };;`;
+
+      case "call":
+        // Format: tel:+phonenumber
+        // Remove any non-digit characters and ensure proper formatting
+        const cleanPhone = inputValue.replace(/\D/g, "");
+        // Add + for international format if not present
+        return `tel:${
+          cleanPhone.startsWith("+") ? cleanPhone : "+" + cleanPhone
+        }`;
+
+      case "message":
+        const messageData =
+          typeof inputValue === "object"
+            ? inputValue
+            : { number: "", message: "" };
+        const cleanMessagePhone = messageData.number?.replace(/\D/g, "") || "";
+        const messageText = encodeURIComponent(
+          messageData.message || inputValue || ""
+        );
+        // Use SMSTO format which is more widely supported
+        return `SMSTO:${cleanMessagePhone}:${messageText}`;
+
+      case "whatsapp":
+        // Format: whatsapp://send?phone=number&text=message
+        const whatsappNumber = inputValue.replace(/\D/g, "");
+        return `whatsapp://send?phone=${whatsappNumber}`;
+
+      // ... rest of the cases remain the same ...
+      case "facebook":
+        return inputValue.startsWith("http")
+          ? inputValue
+          : `https://facebook.com/${inputValue}`;
+
+      case "twitter":
+        return inputValue.startsWith("http")
+          ? inputValue
+          : `https://twitter.com/${inputValue.replace("@", "")}`;
+
+      case "linkedin":
+        return inputValue.startsWith("http")
+          ? inputValue
+          : `https://linkedin.com/in/${inputValue}`;
+
+      case "instagram":
+        return inputValue.startsWith("http")
+          ? inputValue
+          : `https://instagram.com/${inputValue.replace("@", "")}`;
+
+      case "youtube":
+        return inputValue.startsWith("http")
+          ? inputValue
+          : `https://youtube.com/${inputValue}`;
+
+      case "discord":
+        return inputValue.startsWith("http")
+          ? inputValue
+          : `https://discord.gg/${inputValue}`;
+
+      case "reddit":
+        return inputValue.startsWith("http")
+          ? inputValue
+          : `https://reddit.com/${inputValue}`;
+
+      case "github":
+        return inputValue.startsWith("http")
+          ? inputValue
+          : `https://github.com/${inputValue}`;
+
+      case "telegram":
+        return inputValue.startsWith("http")
+          ? inputValue
+          : `https://t.me/${inputValue}`;
+
+      case "crypto":
+        return `cryptocurrency:${inputValue}`;
+
+      case "text":
+        return inputValue;
+
+      default:
+        return inputValue;
+    }
+  };
+  // Rest of the component remains the same...
+  const saveToHistory = (imageUrl) => {
+    const historyItem = {
+      id: uuidv4(),
+      qrImage: imageUrl,
+      destinationType: selectedDestination?.type || "Unknown",
+      inputValue: inputValue || "No input",
+      createdAt: new Date().toISOString(),
+      color: selectedColor.hexColor,
+    };
+
+    const updatedHistory = [historyItem, ...qrHistory];
+    setQrHistory(updatedHistory);
+    localStorage.setItem("qrHistory", JSON.stringify(updatedHistory));
+  };
+
+  const handleDownload = () => {
+    const svg = document.querySelector("#qr-code svg");
+    if (!svg) return;
+
+    const svgData = new XMLSerializer().serializeToString(svg);
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    const img = new Image();
+
+    img.onload = () => {
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0);
+
+      const imageUrl = canvas.toDataURL(
+        `image/${selectedFormat.toLowerCase()}`
+      );
+      saveToHistory(imageUrl);
+
+      const downloadLink = document.createElement("a");
+      downloadLink.download = `qr-code.${selectedFormat.toLowerCase()}`;
+      downloadLink.href = imageUrl;
+      downloadLink.click();
+    };
+
+    img.src = "data:image/svg+xml;base64," + btoa(svgData);
+  };
+
+  return (
+    <div className="md:w-[25%] w-[100%] flex-col bg-white rounded-[10px] shadow-2xl h-[400px] flex items-center py-5 justify-start">
+      <h1 className="text-[23px] font-bold">Preview QR</h1>
+      <div id="qr-code" className="p-4 bg-white rounded-lg">
+        <QRCode
+          value={getQRValue()}
+          bgColor="white"
+          fgColor={selectedColor?.hexColor || "#000000"}
+          size={200}
+          level="H"
+          className="w-full"
+          style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+        />
+      </div>
+      <div className="w-full px-3">
+        <div className="w-full items-center flex justify-between">
+          {["PNG", "JPEG"].map((format) => (
+            <button
+              key={format}
+              onClick={() => setSelectedFormat(format)}
+              className={`py-3 px-5 md:py-2 md:px-11 flex items-center justify-center rounded-[8px] font-bold
+                ${
+                  selectedFormat === format
+                    ? "bg-green-500 text-white"
+                    : "bg-green-50"
+                }`}
+            >
+              {format}
+            </button>
+          ))}
+        </div>
+        <button
+          onClick={handleDownload}
+          className="w-full py-3 bg-green-500 mt-2 rounded-[8px] text-white font-bold"
+        >
+          Download
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default PreviewQR;

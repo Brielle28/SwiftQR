@@ -1,7 +1,6 @@
 import React from 'react';
 import { IoIosLink } from "react-icons/io";
 import { MdOutlineMailOutline, MdOutlineWifiCalling3, MdOutlineWifi } from "react-icons/md";
-import { FaRegUser } from "react-icons/fa";
 import { FiMessageCircle } from "react-icons/fi";
 import { CiBitcoin } from "react-icons/ci";
 import { TfiText } from "react-icons/tfi";
@@ -17,11 +16,6 @@ export const Destinations = [
         id: 2,
         type: "Email",
         icon: MdOutlineMailOutline
-    },
-    {
-        id: 3,
-        type: "VCard",
-        icon: FaRegUser
     },
     {
         id: 4,
@@ -80,11 +74,6 @@ export const Destinations = [
         type: "WhatsApp", 
         icon: FaWhatsapp
     },
-    // { 
-    //     id: 15, 
-    //     type: "Snapchat", 
-    //     icon: FaSnapchat
-    // },
     { 
         id: 16, 
         type: "Discord", 
@@ -99,27 +88,7 @@ export const Destinations = [
         id: 18, 
         type: "GitHub", 
         icon: FaGithub
-    },
-    // { 
-    //     id: 19, 
-    //     type: "Twitch", 
-    //     icon: FaTwitch
-    // },
-    // { 
-    //     id: 20, 
-    //     type: "Google", 
-    //     icon: FaGoogle
-    // },
-    // { 
-    //     id: 21, 
-    //     type: "Microsoft", 
-    //     icon: FaMicrosoft
-    // },
-    // { 
-    //     id: 22, 
-    //     type: "PayPal", 
-    //     icon: FaPaypal
-    // },
+    },  
     { 
         id: 23, 
         type: "Amazon", 
