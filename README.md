@@ -22,7 +22,7 @@ One of the standout features of **SwiftQR** is its built-in **history tracking**
 Whether you're a developer, entrepreneur, or casual user, **SwiftQR** provides a smooth and reliable QR code creation experience, eliminating the hassle of manually searching for QR code generators online.  
 
 ### Demo  
-*(Optional: Add a live demo link or screenshots here to showcase the application.)*  
+![Image](https://github.com/user-attachments/assets/bd038156-3360-4f6c-8f8b-c5045c8c9c45) 
 
 ### Built With  
 - [React](https://reactjs.org/) - JavaScript library for building user interfaces  
