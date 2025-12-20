@@ -1,12 +1,10 @@
-import React, { useState, useMemo } from "react";
-import { useQRCode } from "../context/QrContext";
+import { useState, useMemo } from "react";
+import { useQRCode } from "../Context/QrContext";
 import {
   Calendar,
   Search,
   Filter,
   MoreVertical,
-  Download,
-  Trash2,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 

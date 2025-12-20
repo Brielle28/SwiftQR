@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { useQRCode } from "../context/QrContext";
+import { useQRCode } from "../Context/QrContext";
 import { useState } from "react";
 import { Trash2 } from "lucide-react"; // Ensure this import is correct
 

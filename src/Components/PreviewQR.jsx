@@ -1,6 +1,6 @@
 // import React from "react";
 // import QRCode from "react-qr-code";
-// import { useQRCode } from "../context/QrContext";
+// import { useQRCode } from "../Context/QrContext";
 // import { v4 as uuidv4 } from "uuid";
 
 // const PreviewQR = () => {
@@ -170,7 +170,7 @@
 // export default PreviewQR;
 import React from "react";
 import QRCode from "react-qr-code";
-import { useQRCode } from "../context/QrContext";
+import { useQRCode } from "../Context/QrContext";
 import { v4 as uuidv4 } from "uuid";
 
 const PreviewQR = () => {

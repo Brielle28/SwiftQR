@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useQRCode } from "../context/QrContext";
+import { useQRCode } from "../Context/QrContext";
 import { QRColors } from "../Utils/QRColors";
 
 const Configuration = () => {

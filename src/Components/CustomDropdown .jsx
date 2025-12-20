@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Destinations } from "../Utils/Destinations"; // Import your list of types with icons
 import { FaChevronDown } from "react-icons/fa";
 

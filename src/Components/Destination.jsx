@@ -1,6 +1,5 @@
-import React from "react";
 import { Destinations } from "../Utils/Destinations";
-import { useQRCode } from "../context/QrContext";
+import { useQRCode } from "../Context/QrContext";
 const Destination = () => {
   const { selectedDestination, setSelectedDestination } = useQRCode();
 
