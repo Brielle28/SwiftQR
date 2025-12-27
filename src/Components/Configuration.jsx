@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useQRCode } from "../Context/QrContext";
 import { QRColors } from "../Utils/QRColors";
 
@@ -93,7 +93,7 @@ const Configuration = () => {
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            className="w-full py-3 rounded-[10px] border-[2px] border-green-500 outline-none mt-1 pl-2"
+            className="w-full py-1.5 sm:py-2 md:py-2.5 lg:py-3 rounded-[6px] sm:rounded-[8px] border-[2px] border-green-500 outline-none mt-1 pl-2 sm:pl-2.5 text-[11px] sm:text-xs md:text-sm lg:text-base"
             placeholder={getPlaceholder()}
             disabled={!selectedDestination}
           />
@@ -114,7 +114,7 @@ const Configuration = () => {
                     message: message,
                   });
                 }}
-                className="w-full py-1 border-gray-300 border-b-[1px] outline-none mt-1 pl-2"
+                className="w-full py-1 sm:py-1.5 border-gray-300 border-b-[1px] outline-none mt-1 pl-2 sm:pl-2.5 text-[11px] sm:text-xs md:text-sm"
                 placeholder="Enter Email Address"
                 disabled={!selectedDestination}
               />
@@ -129,7 +129,7 @@ const Configuration = () => {
                     message: message,
                   });
                 }}
-                className="w-full py-1 border-gray-300 border-b-[1px] outline-none mt-1 pl-2"
+                className="w-full py-1 sm:py-1.5 border-gray-300 border-b-[1px] outline-none mt-1 pl-2 sm:pl-2.5 text-[11px] sm:text-xs md:text-sm"
                 placeholder="Enter Subject"
                 disabled={!selectedDestination}
               />
@@ -143,7 +143,7 @@ const Configuration = () => {
                     message: e.target.value,
                   });
                 }}
-                className="w-full rounded-[10px] outline-none mt-1 pl-2"
+                className="w-full rounded-[6px] sm:rounded-[8px] outline-none mt-1 pl-2 sm:pl-2.5 py-1 sm:py-1.5 md:py-2 text-[11px] sm:text-xs md:text-sm"
                 placeholder="Enter Message"
                 disabled={!selectedDestination}
               />
@@ -166,7 +166,7 @@ const Configuration = () => {
                   message: messageText,
                 });
               }}
-              className="w-full py-1 border-gray-300 border-b-[1px] outline-none mt-1 pl-2"
+                className="w-full py-1 sm:py-1.5 border-gray-300 border-b-[1px] outline-none mt-1 pl-2 sm:pl-2.5 text-[11px] sm:text-xs md:text-sm"
               placeholder="Enter Phone Number"
               disabled={!selectedDestination}
             />
@@ -179,7 +179,7 @@ const Configuration = () => {
                   message: e.target.value,
                 });
               }}
-              className="w-full rounded-[10px] outline-none mt-1 pl-2"
+              className="w-full rounded-[8px] outline-none mt-1 pl-2 py-1.5 text-xs sm:text-sm"
               placeholder="Enter your message..."
               disabled={!selectedDestination}
             />
@@ -197,7 +197,7 @@ const Configuration = () => {
                 onChange={(e) =>
                   setInputValue((prev) => ({ ...prev, ssid: e.target.value }))
                 }
-                className="w-full py-1 border-b-[1px] border-gray-300  outline-none mt-1 pl-2"
+                className="w-full py-1 sm:py-1.5 md:py-2 border-b-[1px] border-gray-300 outline-none mt-1 pl-2 sm:pl-2.5 md:pl-3 text-[11px] sm:text-xs md:text-sm lg:text-base"
                 placeholder="WiFi SSID"
               />
               <input
@@ -210,7 +210,7 @@ const Configuration = () => {
                     password: e.target.value,
                   }))
                 }
-                className="w-full  py-1 border-b-[1px] border-gray-300 outline-none mt-1 pl-2"
+                className="w-full py-1 xs:py-1.5 border-b-[1px] border-gray-300 outline-none mt-1 pl-2 xs:pl-2.5 text-[11px] xs:text-xs sm:text-sm"
                 placeholder="WiFi Password"
               />
               <select
@@ -222,7 +222,7 @@ const Configuration = () => {
                     security: e.target.value,
                   }))
                 }
-                className="w-full py-1 outline-none mt-1 pl-2"
+                className="w-full py-1 sm:py-2 outline-none mt-1 pl-2 sm:pl-3 text-sm sm:text-base"
               >
                 <option value="">Select Security Type</option>
                 <option value="WPA">WPA</option>
@@ -239,7 +239,7 @@ const Configuration = () => {
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            className="w-full py-3 rounded-[10px] border-[2px] border-green-500 outline-none mt-1 pl-2"
+            className="w-full py-1.5 sm:py-2 md:py-2.5 lg:py-3 rounded-[6px] sm:rounded-[8px] border-[2px] border-green-500 outline-none mt-1 pl-2 sm:pl-2.5 text-[11px] sm:text-xs md:text-sm lg:text-base"
             placeholder="Select a desired Destination"
             disabled={!selectedDestination}
           />
@@ -248,19 +248,21 @@ const Configuration = () => {
   };
 
   return (
-    <div className="md:w-[40%] flex flex-col items-center justify-start py-5 w-[100%] bg-white rounded-[10px] shadow-2xl h-[400px] px-[10px] overflow-y-scroll">
-      <div className="w-full flex flex-col items-center justify-center">
-        <h1 className="text-[20px] font-bold">
+    <div className="flex flex-col items-center justify-start py-2 sm:py-2.5 md:py-3 lg:py-4 xl:py-4 w-full max-h-[350px] sm:max-h-[480px] md:max-h-[520px] lg:h-full xl:h-full bg-white rounded-[8px] sm:rounded-[10px] shadow-lg sm:shadow-xl lg:shadow-2xl overflow-hidden px-2 sm:px-2.5 md:px-3 lg:px-5 xl:px-5">
+      <div className="w-full flex flex-col items-center justify-center mb-1.5 sm:mb-2 md:mb-3 lg:mb-4 flex-shrink-0">
+        <h1 className="text-[13px] sm:text-[14px] md:text-[15px] lg:text-[17px] xl:text-[17px] font-bold text-center">
           {selectedDestination
             ? `Enter ${selectedDestination.type} Details`
             : "Select Destination"}
         </h1>
-        {renderInputField()}
+        <div className="w-full mt-1.5 sm:mt-2 md:mt-2.5">
+          {renderInputField()}
+        </div>
       </div>
 
-      <div className="w-full flex flex-col items-center justify-center mt-5">
-        <h1 className="text-[20px] font-bold">Background color</h1>
-        <div className="w-[100%] flex flex-wrap gap-3 items-start justify-start mt-3 h-[180px] overflow-y-scroll">
+      <div className="flex-1 w-full flex flex-col items-center justify-start overflow-y-auto min-h-0 pb-1.5 sm:pb-2">
+        <h1 className="text-[13px] sm:text-[14px] md:text-[15px] lg:text-[17px] xl:text-[17px] font-bold mb-1.5 sm:mb-2 md:mb-2.5 lg:mb-2.5 xl:mb-2.5 flex-shrink-0">Background color</h1>
+        <div className="w-full flex flex-wrap gap-1.5 sm:gap-2 md:gap-2.5 lg:gap-3 xl:gap-3 items-start justify-start">
           {QRColors.map((color) => (
             <button
               key={color.id}
@@ -270,14 +272,14 @@ const Configuration = () => {
                   hexColor: color.hexColor,
                 })
               }
-              className={`bg-green-50 w-[65px] h-[35px] flex items-center justify-center rounded-[4px] ${
+              className={`bg-green-50 w-[38px] h-[24px] sm:w-[42px] sm:h-[26px] md:w-[48px] md:h-[30px] lg:w-[55px] lg:h-[32px] xl:w-[55px] xl:h-[32px] 2xl:w-[68px] 2xl:h-[38px] flex items-center justify-center rounded-[3px] sm:rounded-[4px] transition-transform hover:scale-105 active:scale-95 ${
                 selectedColor.bgColor === color.bgColor
                   ? "border-2 border-green-500"
                   : ""
               }`}
             >
               <div
-                className={`${color.bgColor} w-[15px] h-[15px] rounded-[2px]`}
+                className={`${color.bgColor} w-[8px] h-[8px] sm:w-[9px] sm:h-[9px] md:w-[10px] md:h-[10px] lg:w-[12px] lg:h-[12px] xl:w-[12px] xl:h-[12px] 2xl:w-[15px] 2xl:h-[15px] rounded-[2px]`}
               ></div>
             </button>
           ))}
